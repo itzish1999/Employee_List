@@ -8,19 +8,24 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-const db = require('./models');
 
-db.sequelize.sync({ force: true }).then(() => {
-    console.log('Drop and re-sync db.');
-});
 // parses requests of content-type - application/json
 app.use(bodyParser.json());
 // parses requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const db = require('./models');
+db.sequelize.sync({ force: true }).then(() => {
+    console.log('Drop and re-sync db.');
+});
+
 // simple route
 app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the employee app'})
+    res.json({ message: 'Welcome to the Tutorial app'})
 });
+
+require("./routes/tutorial.routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

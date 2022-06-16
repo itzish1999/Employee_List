@@ -11,12 +11,14 @@ exports.create = (req, res) => {
         });
         return;
     }
+
 // Create a Tutorial
 const tutorial = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false
 };
+
 // Save Tutorial in the database
 Tutorial.create(tutorial)
     .then(data => {
@@ -28,13 +30,13 @@ Tutorial.create(tutorial)
             err.message || "Something went wrong creating your tutorial."
         });
     });
-
 };
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
     const title = req.query.title;
     var condition = title ? { title: { [Op.iLike]: `%${title}%`} } : null;
+    
     Tutorial.findAll({ where: condition })
     .then(data => {
         res.send(data);
@@ -50,6 +52,7 @@ exports.findAll = (req, res) => {
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
+    
     Tutorial.findByPk(id)
     .then(data => {
         if (data) {
@@ -67,7 +70,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update an object
+// Update an Tutorial
 exports.update = (req, res) => {
     const id = req.params.id;
     Tutorial.update(req.body, {
