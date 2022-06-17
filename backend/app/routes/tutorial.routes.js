@@ -1,5 +1,6 @@
 module.exports = app => {
     const tutorials = require("../controllers/controller.js");
+    
     var router = require("express").Router();
 
     // Create a new Tutorial
@@ -22,5 +23,7 @@ module.exports = app => {
 
     // Create a new Tutorial
     router.delete("/", tutorials.deleteAll)
-    app.use("../server/tutorials", router);
+
+    // Http path I will use to execute the code
+    app.use("/api/tutorials", router);
 };
